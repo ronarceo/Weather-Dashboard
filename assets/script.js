@@ -112,5 +112,4 @@ $('.cityButton').on('click', function(){
   city = $(this).val();
   console.log(city);
   getWeather(city);
-  $('.clear').html('');
 })
