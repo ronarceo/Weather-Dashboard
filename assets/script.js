@@ -92,7 +92,7 @@ function getCities() {
       
       for (let i = 0; i < mySearch.length; i++) {
           let displayDiv = $('<button>');
-          displayDiv.addClass("cityButton, btn-secondary");
+          displayDiv.addClass("cityButton btn-secondary");
           displayDiv.text(mySearch[i]);
           displayDiv.attr('value', mySearch[i]);
           $("#pastCities").append(displayDiv);         
