@@ -1,17 +1,67 @@
 //variables to store API key
 var APIKey = "3b27d7b38f6bc4d03767615ede7e0436";
+//variable for current date
+let date = moment().format('L'); 
 //array to store cities that user searches for in local storage
 var citySearch = [];
 
 //function that gets necessary data from OpenWeather One Call API
 function getWeather(city) {
-  var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
+  var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey + "&units=imperial";
   fetch(queryURL)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
+      let icon = $('<img class="icon">');
+      icon.attr("src", "https://openweathermap.org/img/wn/" + data.weather[0].icon + ".png")
+
+      $("#cityDisplay").text(data.name + " " + "(" + date + ")").append(icon);
+      $("#temperatureDisplay").text("Temp: " + data.main.temp + " \u00B0F");
+      $("#windSpeedDisplay").text("Wind: " + data.wind.speed + " MPH");
+      $("#humidityDisplay").text("Humidity: " + data.main.humidity + "%");
+
+      var uvIndexURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&appid=" + APIKey + "&units=imperial";
+      fetch(uvIndexURL)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data){
+        console.log(data);
+        let uvIndex = data.current.uvi;
+
+        if(uvIndex < 2.9){
+          $('#uvIndexDisplay').text("UV Index: ").append("<span class='favorable'>" + uvIndex + '</span');
+      } else if (uvIndex > 3.0 && uvIndex < 7.9) {
+          $('#uvIndexDisplay').text("UV Index: ").append("<span class='moderate'>" + uvIndex + '</span');
+      } else if (uvIindex > 8.0){
+          $('#uvIndexDisplay').text("UV Index: ").append("<span class='severe'>" + uvIndex + '</span');
+      }
+      $("#forecastHeader").text("5-Day Forecast:");
+
+      let days = ['day1', 'day2', 'day3', 'day4', 'day5']
+      for (let i = 1; i < days.length +1 ; i++) {
+                
+        let cardDiv = $('<div class="card col">');
+        let dayHeader = $('<p class="next-day">');
+        let dayIcon = $('<img class="icon">');
+        let dayTemp = $('<p class="temp">');
+        let dayHumidity = $('<p class="humid">');
+
+        let timestamp = data.daily[i].dt * 1000;
+        
+        const d = new Date(timestamp);
+        date = d.toDateString();
+        
+        dayHeader.text(date)
+        dayIcon.attr("src", "https://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon +".png");
+        dayTemp.text("Temp: " + data.daily[i].temp.day + " \u00B0F");
+        dayHumidity.text("Humidity: " + data.daily[i].humidity + "%");
+
+        $('.forecastDisplay').append(cardDiv);
+        cardDiv.append(dayHeader, dayIcon, dayTemp, dayHumidity);
+      }
+      })
     });
 }
 
@@ -60,5 +110,7 @@ $('#clearButton').on('click', function(){
 // displays weather and 5 day forecast for cities in user's search history
 $('.cityButton').on('click', function(){
   city = $(this).val();
-  getWeather(city);    
+  console.log(city);
+  getWeather(city);
+  $('.clear').html('');
 })
