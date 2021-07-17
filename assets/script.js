@@ -35,7 +35,7 @@ function getWeather(city) {
           $('#uvIndexDisplay').text("UV Index: ").append("<span class='favorable'>" + uvIndex + '</span');
       } else if (uvIndex > 3.0 && uvIndex < 7.9) {
           $('#uvIndexDisplay').text("UV Index: ").append("<span class='moderate'>" + uvIndex + '</span');
-      } else if (uvIindex > 8.0){
+      } else if (uvIndex > 8.0){
           $('#uvIndexDisplay').text("UV Index: ").append("<span class='severe'>" + uvIndex + '</span');
       }
       $("#forecastHeader").text("5-Day Forecast:");
