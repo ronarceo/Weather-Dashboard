@@ -22,6 +22,7 @@ function getWeather(city) {
       $("#windSpeedDisplay").text("Wind: " + data.wind.speed + " MPH");
       $("#humidityDisplay").text("Humidity: " + data.main.humidity + "%");
 
+      //a different URL from the city's latitude and longitude to get the UV index and 5 day forecast
       var uvIndexURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&appid=" + APIKey + "&units=imperial";
       fetch(uvIndexURL)
       .then(function (response) {
@@ -30,7 +31,7 @@ function getWeather(city) {
       .then(function (data){
         console.log(data);
         let uvIndex = data.current.uvi;
-
+        //if statement to determine the background color of the UV index
         if(uvIndex < 2.9){
           $('#uvIndexDisplay').text("UV Index: ").append("<span class='favorable'>" + uvIndex + '</span');
       } else if (uvIndex > 3.0 && uvIndex < 7.9) {
@@ -40,8 +41,8 @@ function getWeather(city) {
       }
       $("#forecastHeader").text("5-Day Forecast:");
 
-      let days = ['day1', 'day2', 'day3', 'day4', 'day5']
-      for (let i = 1; i < days.length +1 ; i++) {
+      //for loop to create cards for 5 day forecast
+      for (let i = 1; i < 6 ; i++) {
                 
         let cardDiv = $('<div class="card col">');
         let dayHeader = $('<p class="next-day">');
@@ -66,7 +67,7 @@ function getWeather(city) {
     });
 }
 
-//user inputs city to display weather and 5 day forecast and adds it to local storage
+//user inputs city to display weather and 5 day forecast and adds the city to local storage
 $("#searchButton").on('click', function(event){
   event.preventDefault();
 
