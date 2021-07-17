@@ -13,7 +13,7 @@ A button to clear searches is placed between the search bar and search history w
 ```
 
 ## Screenshot
-![screenshot of the app](images/)
+![screenshot of the app](images/image1.png)
 
 ## Libraries and APIs
 ```
