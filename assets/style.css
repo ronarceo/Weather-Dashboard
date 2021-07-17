@@ -1,3 +1,7 @@
+* {
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
 .jumbotron {
     text-align: center;
     background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
@@ -40,8 +44,8 @@ button {
 
 .card {
     background-color: powderblue;
-    min-width: 150px;
-    max-width: 150px;
+    min-width: 160px;
+    max-width: 160px;
     padding: 10px;
     margin: 10px;
 }

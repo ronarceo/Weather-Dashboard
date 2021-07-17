@@ -8,7 +8,7 @@ var citySearch = [];
 //function that gets necessary data from OpenWeather One Call API
 function getWeather(city) {
   $('.forecastDisplay').html('');
-  var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey + "&units=imperial";
+  var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey + "&units=imperial";
   fetch(queryURL)
     .then(function (response) {
       return response.json();
