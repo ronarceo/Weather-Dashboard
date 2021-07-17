@@ -1,12 +1,13 @@
 //variables to store API key
 var APIKey = "3b27d7b38f6bc4d03767615ede7e0436";
 //variable for current date
-let date = moment().format('L'); 
+let dateToday = moment().format('L'); 
 //array to store cities that user searches for in local storage
 var citySearch = [];
 
 //function that gets necessary data from OpenWeather One Call API
 function getWeather(city) {
+  $('.forecastDisplay').html('');
   var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey + "&units=imperial";
   fetch(queryURL)
     .then(function (response) {
@@ -16,7 +17,7 @@ function getWeather(city) {
       let icon = $('<img class="icon">');
       icon.attr("src", "https://openweathermap.org/img/wn/" + data.weather[0].icon + ".png")
 
-      $("#cityDisplay").text(data.name + " " + "(" + date + ")").append(icon);
+      $("#cityDisplay").text(data.name + " " + "(" + dateToday + ")").append(icon);
       $("#temperatureDisplay").text("Temp: " + data.main.temp + " \u00B0F");
       $("#windSpeedDisplay").text("Wind: " + data.wind.speed + " MPH");
       $("#humidityDisplay").text("Humidity: " + data.main.humidity + "%");
@@ -110,6 +111,5 @@ $('#clearButton').on('click', function(){
 // displays weather and 5 day forecast for cities in user's search history
 $('.cityButton').on('click', function(){
   city = $(this).val();
-  console.log(city);
   getWeather(city);
 })
