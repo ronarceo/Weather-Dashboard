@@ -55,7 +55,7 @@ function getWeather(city) {
         const d = new Date(timestamp);
         date = d.toDateString();
         
-        dayHeader.text(date)
+        dayHeader.text(date);
         dayIcon.attr("src", "https://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon +".png");
         dayTemp.text("Temp: " + data.daily[i].temp.day + " \u00B0F");
         dayHumidity.text("Humidity: " + data.daily[i].humidity + "%");
